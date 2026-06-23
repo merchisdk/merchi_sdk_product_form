@@ -1,13 +1,23 @@
+const warmMock = jest.fn();
+
 jest.mock('../runtime/pricing', () => ({
   createPricing: () => ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getQuote: async (job: any) => ({ ...job, totalCost: 42 }),
+    warm: () => warmMock(),
   }),
 }));
 
 import { createProductFormRuntime } from '../runtime/runtime';
 
 describe('createProductFormRuntime', () => {
+  beforeEach(() => warmMock.mockReset());
+
+  it('warms pricing on creation', () => {
+    createProductFormRuntime({ apiUrl: 'x', product: { id: 1 } });
+    expect(warmMock).toHaveBeenCalled();
+  });
+
   it('quotes the job then calls the matching callback', async () => {
     const onBuyNow = jest.fn();
     const runtime = createProductFormRuntime({

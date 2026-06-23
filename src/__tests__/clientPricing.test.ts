@@ -98,4 +98,21 @@ describe('createPricing client-side path', () => {
     expect(estimateQuoteMock).not.toHaveBeenCalled();
     expect(serverGetQuoteMock).toHaveBeenCalled();
   });
+
+  it('warm() caches provided rules so the first quote does no fetch and is local', async () => {
+    estimateQuoteMock.mockReturnValue({ totalCost: 5, currency: 'USD' });
+    const fetchMock = jest.fn();
+    (global as Record<string, unknown>).fetch = fetchMock;
+    const pricing = createPricing('https://api/v6/', {
+      product: { id: 9, clientSideCalculation: true },
+      pricingRules: RULES,
+    });
+    pricing.warm();
+    const out = await pricing.getQuote({ variationsGroups: [] });
+    expect(out.totalCost).toBe(5);
+    // rules were provided, so warm/getQuote never hit the network
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(serverGetQuoteMock).not.toHaveBeenCalled();
+    delete (global as Record<string, unknown>).fetch;
+  });
 });

@@ -9,6 +9,10 @@ export interface Pricing {
    * fields (cost, totalCost, currency, ...) populated. Uses client-side
    * calculation when the product supports it, else a server quote. */
   getQuote: (job: JobJson) => Promise<JobJson>;
+  /** Eagerly fetch + cache the client-side pricing rules (no-op unless the
+   * product has clientSideCalculation). Safe to call fire-and-forget on mount so
+   * the first quote is instant. */
+  warm: () => void;
 }
 
 export interface PricingOptions {
@@ -69,6 +73,12 @@ export function createPricing(apiUrl: string, options: PricingOptions = {}): Pri
   }
 
   return {
+    warm: () => {
+      if (product && product.clientSideCalculation) {
+        // fire-and-forget: populate the cache so the first quote is instant.
+        void getRules();
+      }
+    },
     getQuote: async (job: JobJson): Promise<JobJson> => {
       if (product && product.clientSideCalculation) {
         const rules = await getRules();

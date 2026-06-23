@@ -45,6 +45,9 @@ export function createProductFormRuntime(
     product: config.product,
     pricingRules: config.pricingRules,
   });
+  // Warm client-side pricing rules in the background so the first quote is
+  // instant (no-op for products without clientSideCalculation).
+  pricing.warm();
   const helpers: Helpers = { serializeJob, nonEmptyGroups, formatCurrency, urlFor };
 
   const quoteThen = (cb?: (job: JobJson) => void) =>
