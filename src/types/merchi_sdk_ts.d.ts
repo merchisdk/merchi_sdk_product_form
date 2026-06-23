@@ -20,4 +20,21 @@ declare module 'merchi_sdk_ts' {
     );
     Job: new () => MerchiJob;
   }
+
+  // Client-side pricing engine. Typed loosely here (the SDK ships no .d.ts);
+  // estimateQuote returns a QuoteResult or an { unsupported } marker.
+  export const pricing: {
+    estimateQuote(
+      rules: unknown,
+      selections: unknown,
+    ): {
+      cost?: number;
+      costPerUnit?: number;
+      taxAmount?: number;
+      totalCost?: number;
+      currency?: string;
+      groupCosts?: number[];
+      unsupported?: string;
+    };
+  };
 }

@@ -33,7 +33,7 @@ describe('createPricing.getQuote', () => {
   });
 
   it('injects the default product id when the job has no product', async () => {
-    const pricing = createPricing('https://api.example/v6/', 7);
+    const pricing = createPricing('https://api.example/v6/', { product: { id: 7 } });
     await pricing.getQuote({ variationsGroups: [] });
     const passed = fromJsonMock.mock.calls[0][0];
     expect(passed.product).toEqual({ id: 7 });

@@ -20,6 +20,9 @@ export interface Helpers {
 export interface ProductFormRuntimeConfig {
   apiUrl: string;
   product: ProductJson;
+  /** Pre-fetched pricing rules (optional). When omitted and the product has
+   * clientSideCalculation set, the rules are fetched lazily on first quote. */
+  pricingRules?: unknown;
   onAddToCart?: (job: JobJson) => void;
   onBuyNow?: (job: JobJson) => void;
   onGetQuote?: (job: JobJson) => void;
@@ -38,7 +41,10 @@ export interface ProductFormRuntime {
 export function createProductFormRuntime(
   config: ProductFormRuntimeConfig,
 ): ProductFormRuntime {
-  const pricing = createPricing(config.apiUrl, config.product.id);
+  const pricing = createPricing(config.apiUrl, {
+    product: config.product,
+    pricingRules: config.pricingRules,
+  });
   const helpers: Helpers = { serializeJob, nonEmptyGroups, formatCurrency, urlFor };
 
   const quoteThen = (cb?: (job: JobJson) => void) =>
