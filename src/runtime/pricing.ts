@@ -9,12 +9,18 @@ export interface Pricing {
 }
 
 /** Build a pricing helper bound to a backend api url. Re-implements
- * merchi_product_form's fetchJobQuote against merchi_sdk_ts directly. */
-export function createPricing(apiUrl: string): Pricing {
+ * merchi_product_form's fetchJobQuote against merchi_sdk_ts directly.
+ * defaultProductId is applied to jobs that don't already carry a product, so
+ * Job.getQuote() (which reads product.id) never receives a product-less job. */
+export function createPricing(apiUrl: string, defaultProductId?: number): Pricing {
   const merchi = new Merchi(undefined, undefined, undefined, undefined, apiUrl);
   return {
     getQuote: async (job: JobJson): Promise<JobJson> => {
-      const cleaned = serializeJob(job);
+      const withProduct: JobJson =
+        job.product && job.product.id !== undefined
+          ? job
+          : { ...job, product: { id: defaultProductId } };
+      const cleaned = serializeJob(withProduct);
       const merchiJob = new merchi.Job();
       merchiJob.fromJson(cleaned as Record<string, unknown>, {
         makeDirty: false,

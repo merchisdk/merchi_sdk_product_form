@@ -17,7 +17,7 @@ describe('createProductFormRuntime', () => {
     });
     await runtime.actions.buyNow!({ variationsGroups: [{ quantity: 1, variations: [] }] });
     expect(onBuyNow).toHaveBeenCalledWith(
-      expect.objectContaining({ totalCost: 42 }),
+      expect.objectContaining({ totalCost: 42, product: { id: 7 } }),
     );
   });
 

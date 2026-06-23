@@ -11,7 +11,7 @@ const ColourGridForm: ProductFormComponent = ({ product, actions, helpers }) => 
       quantity: quantities[opt.id ?? -1] ?? 0,
       variations: [{ variationField: product.groupVariationFields?.[0]?.id, value: String(opt.id) }],
     }));
-    return { variationsGroups: nonEmptyGroups(groups) };
+    return { product: { id: product.id }, variationsGroups: nonEmptyGroups(groups) };
   };
 
   return (

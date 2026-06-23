@@ -38,7 +38,7 @@ export interface ProductFormRuntime {
 export function createProductFormRuntime(
   config: ProductFormRuntimeConfig,
 ): ProductFormRuntime {
-  const pricing = createPricing(config.apiUrl);
+  const pricing = createPricing(config.apiUrl, config.product.id);
   const helpers: Helpers = { serializeJob, nonEmptyGroups, formatCurrency, urlFor };
 
   const quoteThen = (cb?: (job: JobJson) => void) =>
