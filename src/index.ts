@@ -1,4 +1,4 @@
-export { SDK_VERSION } from './version';
+export { SDK_VERSION, getProductFormSdkVersion } from './version';
 
 export type { OptionJson, VariationFieldJson, VariationJson, VariationsGroupJson }
   from './types/variation';

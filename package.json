@@ -2,23 +2,31 @@
   "name": "merchi_sdk_product_form",
   "version": "1.0.5",
   "description": "Contract SDK for AI-built Merchi custom product forms.",
-  "repository": "git@github.com:merchisdk/merchi_sdk_product_form.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merchisdk/merchi_sdk_product_form.git"
+  },
+  "author": "James Campton <james@merchi.co>",
   "license": "GPL-3.0",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "prebuild": "node scripts/sync-version.mjs",
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "prepublishOnly": "node scripts/sync-version.mjs && npm run build && npm test"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "merchi_sdk_ts": "^1.13.0"
+    "merchi_sdk_ts": "^1.14.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
