@@ -10,6 +10,7 @@ export interface ProductJson {
   unitPrice?: number;
   bestPrice?: number;
   minimum?: number;
+  minOrderQuantity?: number;
   groupsFirst?: boolean;
   needsInventory?: boolean;
   allowAddToCart?: boolean;

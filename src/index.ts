@@ -8,6 +8,18 @@ export type { ProductFormProps, ProductFormComponent } from './types/form';
 
 export { serializeJob, nonEmptyGroups } from './helpers/serialize';
 export { formatCurrency, urlFor } from './helpers/format';
+export {
+  productHasGroups,
+  groupFieldsOf,
+  independentFieldsOf,
+  isOptionQuantityGridProduct,
+} from './helpers/product';
+export {
+  buildProductFormJob,
+  selectionsToVariations,
+} from './helpers/buildJob';
+export type { GroupRow, ProductFormJobState } from './helpers/buildJob';
+export { OPTION_FIELD_TYPES } from './helpers/constants';
 
 export { createPricing } from './runtime/pricing';
 export type { Pricing } from './runtime/pricing';
@@ -18,3 +30,27 @@ export type {
   ProductFormRuntime,
   ProductFormRuntimeConfig,
 } from './runtime/runtime';
+
+// UI component kit — the building blocks AI-built forms compose. Form authors
+// import these from 'merchi_sdk_product_form' (the static gate allowlists it).
+export {
+  Section,
+  Stack,
+  Card,
+  Heading,
+  Text,
+  Divider,
+  Field,
+  GroupRows,
+  OptionQuantityGrid,
+  ProductFormProvider,
+  ProductFormShell,
+  useProductForm,
+  theme,
+} from './components';
+export type {
+  ProductFormContextValue,
+  ProductFormProviderProps,
+  FieldSelection,
+  SubmitAction,
+} from './components';

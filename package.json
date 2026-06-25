@@ -1,7 +1,9 @@
 {
-  "name": "@merchi/product-form-sdk",
-  "version": "1.0.0",
+  "name": "merchi_sdk_product_form",
+  "version": "1.0.5",
   "description": "Contract SDK for AI-built Merchi custom product forms.",
+  "repository": "git@github.com:merchisdk/merchi_sdk_product_form.git",
+  "license": "GPL-3.0",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -13,20 +15,21 @@
     "lint": "eslint src --ext .ts,.tsx"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
     "merchi_sdk_ts": "^1.13.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
-    "@types/react": "^18.2.0",
+    "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.47.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
-    "react": "^18.0.0",
+    "react": "^19.0.0",
     "ts-jest": "^29.0.0",
     "typescript": "^5.1.6"
   }

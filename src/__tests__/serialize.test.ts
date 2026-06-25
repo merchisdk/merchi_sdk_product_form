@@ -1,12 +1,12 @@
 import { serializeJob, nonEmptyGroups } from '../helpers/serialize';
 
 describe('serializeJob', () => {
-  it('defaults missing group quantity to 0', () => {
+  it('defaults missing group quantity to 0 and drops zero-quantity groups', () => {
     const out = serializeJob({
       variationsGroups: [{ variations: [] }, { quantity: 3, variations: [] }],
     });
-    expect(out.variationsGroups![0].quantity).toBe(0);
-    expect(out.variationsGroups![1].quantity).toBe(3);
+    expect(out.variationsGroups).toHaveLength(1);
+    expect(out.variationsGroups![0].quantity).toBe(3);
   });
 
   it('strips form-only fields from variations', () => {
@@ -24,10 +24,10 @@ describe('serializeJob', () => {
   });
 
   it('does not mutate the input object', () => {
-    const input = { variationsGroups: [{ variations: [] }] };
+    const input = { variationsGroups: [{ quantity: 2, variations: [] }] };
     const out = serializeJob(input);
     expect(out).not.toBe(input);
-    expect(input.variationsGroups[0]).not.toHaveProperty('quantity');
+    expect(input.variationsGroups[0].quantity).toBe(2);
   });
 });
 
